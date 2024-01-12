@@ -7,6 +7,26 @@ source "$(dirname "$0")/../lib/json.bash"
 
 json=$(curl --fail --silent --location https://ziglang.org/download/index.json)
 
+load_custom_json() {
+  local custom_json_path=~/.asdf/custom/zig/versions.json
+  cat $custom_json_path 1>/dev/null 2>/dev/null
+  local has_custom_json=$?
+  if [ $has_custom_json -eq 0 ]; then
+    cat $custom_json_path
+  else
+    echo -n "{}"
+  fi
+}
+
+custom_json=$(load_custom_json)
+
+list_all_custom_versions() {
+  json_parse "$custom_json" |
+    sed 's/^\[\(.*\)\].*$/\1/' |
+    grep -Eo '[0-9]+.[0-9]+.[0-9]+-[^-"]+' |
+    uniq
+}
+
 sort_versions() {
   sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
@@ -19,4 +39,7 @@ list_all_versions() {
     uniq
 }
 
-list_all_versions | sort_versions | xargs echo
+list_all_versions | sort_versions | xargs echo -n
+echo -n " "
+list_all_custom_versions | sort_versions | xargs echo -n
+echo ""
