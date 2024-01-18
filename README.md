@@ -28,7 +28,7 @@ echo "{\"0.12.0-dev.2139+e025ad7b4\": {}}" > ~/.asdf/custom/zig/versions.json
 
 and after that you will find your custom version is available in `asdf` commands. See this demo video for how I use it in life
 
-<img src="https://github.com/liyu1981/asdf-zig/blob/asdf-zig-custom-version/demo_video/asdf-zig-custom.gif?raw=true" alt="demo gif for asdf-zig with custom versions" width="480px" />
+<img src="https://github.com/liyu1981/asdf-zig/blob/asdf-zig-custom-version/demo/asdf-zig-custom.gif?raw=true" alt="demo gif for asdf-zig with custom versions" width="480px" />
 
 ## what's the format for `~/.asdf/custom/zig/versions.json`
 
@@ -43,6 +43,14 @@ currently it is just naive :)
 ```
 
 you get the idea, only the `key` part is relevant, the `value` part is not, so I just keep a simple '{}' to fool the underlying json parser (from original `asdf-zig`).
+
+## what if I want install cutting edge `zig` master?
+
+commit `a789504` added this feature! just do `asdf list-all zig` and `asdf install zig <version>`, like follows
+
+![list all zig including master version](https://github.com/liyu1981/asdf-zig/blob/asdf-zig-custom-version/demo/list-all-master.png?raw=true)
+
+![install zig master version with asdf](https://github.com/liyu1981/asdf-zig/blob/asdf-zig-custom-version/demo/install-use-master.png?raw=true)
 
 I hope this helps!
 
